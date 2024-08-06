@@ -15,6 +15,23 @@ class LigneCommande extends Model
         'commande_id',
 
     ];
+
+    // public  function calculate_amount(): void{
+
+    // }
+
+    protected static function booted(): void
+    {
+        static::created(function (LigneCommande $lignecommande) {
+            $lignecommande->commande->montant +=$lignecommande->quantite*$lignecommande->produit->prix;
+            $lignecommande->commande->save();
+
+
+            $lignecommande->produit->quantite=$lignecommande->produit->quantite-$lignecommande->quantite;
+            $lignecommande->produit->save();
+
+        });
+    }
     public function produit():BelongsTo
     {
         return $this->belongsTo(Produit::class);

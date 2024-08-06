@@ -1,6 +1,6 @@
 \documentclass[11pt,a4paper]{article}
 \usepackage[utf8]{inputenc}
-\usepackage[french]{babel}
+{{-- \usepackage[french]{babel} --}}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath}
 \usepackage{amsfonts}
@@ -15,19 +15,27 @@
 \end{center}
 \begin{center}
 \begin{flushleft}
-Date: 29/11/2023 \\
-Nom du client : {{ "Je suis dans un fichier .blade.php" }} (nom du client)
+Date: {{$commande->date}}\\
+Nom du client : {{ $commande->client }}
 \end{flushleft}
 \vspace{0.5cm}
-\begin{tabular}{|p{1.5cm}|p{10cm}|p{1.5cm}|p{3cm}|}
+@php
+    $montant=0;
+@endphp
+\begin{tabular}{|p{1.5cm}|p{7cm}|p{3cm}|p{3.5cm}|}
 \hline
 Quantité & Désignation & Prix Unitaire & Total \\
 \hline
-- & - & - & - \\
-\hline
-- & - & - & - \\
-\hline
-\multicolumn{2}{|c|}{Somme total} &  \multicolumn{2}{|c|}{- FCFA}\\
+
+@foreach ($commande->ligne_commandes as $lignecommande)
+    {{$lignecommande->quantite}} & {{$lignecommande->produit->libelle}} & {{$lignecommande->produit->prix}} FCFA & {{$lignecommande->produit->prix*$lignecommande->quantite}} FCFA\\
+    @php
+        $montant=$montant+$lignecommande->produit->prix*$lignecommande->quantite;
+@endphp
+    \hline
+@endforeach
+
+\multicolumn{2}{|c|}{Somme total} &  \multicolumn{2}{|c|}{ {{$montant}}  FCFA}\\
 \hline
 \end{tabular}
 \end{center}

@@ -16,6 +16,9 @@ class Commande extends Model
         'date',
         'vendeur_id',
     ];
+
+
+
     public function ligne_commandes():HasMany
     {
         return $this->hasMany(LigneCommande::class);

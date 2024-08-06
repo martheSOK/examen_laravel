@@ -39,7 +39,7 @@
                                 <tr class="bg-gray-100">
                                     <td>
                                         @if($un_produit->image)
-                                            <img class="w-20 h-20" src="{{ asset('storage/'.$un_produit->image) }}" alt="{{ $un_produit->image }}">
+                                            <img class="w-20 h-20" src="{{ asset('storage/images/produits/'.$un_produit->image) }}" alt="{{ $un_produit->image }}">
                                         @else
                                             No image
                                         @endif
@@ -61,7 +61,7 @@
                                             <button class="bg-yellow-600 hover:bg-yellow-500 text-white text-sm px-3 py-2 rounded-md">Consulter</button>
                                         </a>
 
-                                        <form action="{{ route('profile.destroy',$un_produit) }}" method="post">
+                                        <form action="{{ route('produits.destroy',$un_produit) }}" method="post">
                                             @csrf
                                             @method("DELETE")
                                             <button class="bg-red-600 hover:bg-red-500 text-white text-sm px-3 py-2 rounded-md">Supprimer</button>

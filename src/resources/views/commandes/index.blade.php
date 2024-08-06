@@ -12,7 +12,7 @@
                     {{ __("Liste des commandes") }}
                 </div>
                 <div>
-                    <a href="">
+                    <a href="{{ route('commandes.create')}}">
                         <button class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-3 py-2 rounded-md">Ajouter</button>
                     </a>
                 </div>
@@ -31,31 +31,35 @@
                             <th class="py-3 px-6">Actions</th>
                         </thead>
                         <tbody>
-                            <tr class="bg-gray-100">
-                                <td class="py-3 px-6">
-
-                                </td>
-                                <td class="py-3 px-6">
-
-                                </td>
-                                <td class="py-3 px-6">
-
-                                </td>
-                                <td class="py-3 px-6">
-                                    <a href="">
-                                        <button class="bg-green-600 hover:bg-green-500 text-white text-sm px-3 py-2 rounded-md">Facture</button>
-                                    </a>
-                                    <a href="">
-                                        <button class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-3 py-2 rounded-md">Editer</button>
-                                    </a>
-                                    <a href="">
-                                        <button class="bg-yellow-600 hover:bg-yellow-500 text-white text-sm px-3 py-2 rounded-md">Consulter</button>
-                                    </a>
-                                    <a href="">
-                                        <button class="bg-red-600 hover:bg-red-500 text-white text-sm px-3 py-2 rounded-md">Supprimer</button>
-                                    </a>
-                                </td>
-                            </tr>
+                            @forelse ( $commandes as $une_commande )
+                                <tr class="bg-gray-100">
+                                    <td class="py-3 px-6">
+                                        {{ $une_commande->Vendeur->name}}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        {{ $une_commande->client }}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        {{ $une_commande->montant}}
+                                    </td>
+                                    <td class="py-3 px-6">
+                                        <a href="{{ route('commandes.generate_facture') }}">
+                                            <button class="bg-green-600 hover:bg-green-500 text-white text-sm px-3 py-2 rounded-md">Facture</button>
+                                        </a>
+                                        <a href="{{ route('commandes.edit', $une_commande) }}">
+                                            <button class="bg-blue-600 hover:bg-blue-500 text-white text-sm px-3 py-2 rounded-md">Editer</button>
+                                        </a>
+                                        <a href="{{ route('commandes.show' , $une_commande)}}">
+                                            <button class="bg-yellow-600 hover:bg-yellow-500 text-white text-sm px-3 py-2 rounded-md">Consulter</button>
+                                        </a>
+                                        <a href="{{ route('commandes.destroy' , $une_commande) }}">
+                                            <button class="bg-red-600 hover:bg-red-500 text-white text-sm px-3 py-2 rounded-md">Supprimer</button>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @empty
+                                    <p class=" text-white ">Accune commande disponible</p>
+                            @endforelse
                         </tbody>
                     </table>
                     <div>

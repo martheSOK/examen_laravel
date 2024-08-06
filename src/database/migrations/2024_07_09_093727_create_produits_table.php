@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('produits', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('libelle');
+            $table->string('libelle')->unique();
             $table->integer('prix');
             $table->integer('quantite');
             $table->string('image')->nullable();
