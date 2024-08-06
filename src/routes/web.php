@@ -35,6 +35,8 @@ Route::middleware('auth')->group(function () {
     //     return view("produits.index");
     // })->name('produits.index');
 
+    Route::get('/generating_pdf',[CommandeController::class,'generer_facture'])->name('commandes.generate_facture');
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
