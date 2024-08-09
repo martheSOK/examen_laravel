@@ -43,7 +43,7 @@
                                         {{ $une_commande->montant}}
                                     </td>
                                     <td class="py-3 px-6">
-                                        <a href="{{ route('commandes.generate_facture') }}">
+                                        <a href="{{ route('commandes.generate_facture',$une_commande) }}">
                                             <button class="bg-green-600 hover:bg-green-500 text-white text-sm px-3 py-2 rounded-md">Facture</button>
                                         </a>
                                         <a href="{{ route('commandes.edit', $une_commande) }}">
@@ -52,9 +52,15 @@
                                         <a href="{{ route('commandes.show' , $une_commande)}}">
                                             <button class="bg-yellow-600 hover:bg-yellow-500 text-white text-sm px-3 py-2 rounded-md">Consulter</button>
                                         </a>
-                                        <a href="{{ route('commandes.destroy' , $une_commande) }}">
+                                        {{-- <a href="{{ route('commandes.destroy' , $une_commande) }}">
                                             <button class="bg-red-600 hover:bg-red-500 text-white text-sm px-3 py-2 rounded-md">Supprimer</button>
-                                        </a>
+                                        </a> --}}
+
+                                        <form action="{{ route('commandes.destroy' , $une_commande) }}" method="post">
+                                            @csrf
+                                            @method("DELETE")
+                                            <button class="bg-red-600 hover:bg-red-500 text-white text-sm px-3 py-2 rounded-md">Supprimer</button>
+                                        </form>
                                     </td>
                                 </tr>
                                 @empty
