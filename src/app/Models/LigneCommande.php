@@ -31,6 +31,9 @@ class LigneCommande extends Model
             $lignecommande->produit->save();
 
         });
+        static::updated(function(LigneCommande $lignecommande){
+
+        });
     }
     public function produit():BelongsTo
     {

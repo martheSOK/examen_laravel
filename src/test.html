@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajouter des produits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        label {
+            margin-right: 10px;
+        }
+
+        select, input[type="number"] {
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            padding: 5px 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid black;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .action-btn {
+            padding: 5px 10px;
+            margin-right: 5px;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        .edit-btn {
+            background-color: #007bff;
+        }
+
+        .edit-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Ajouter des produits</h1>
+
+    <form id="productForm">
+        <label for="product">Produit:</label>
+        <select id="product" name="product" required>
+            <option value="" disabled selected>Choisir un produit</option>
+            <option value="Produit 1">Produit 1</option>
+            <option value="Produit 2">Produit 2</option>
+            <option value="Produit 3">Produit 3</option>
+            <option value="Produit 4">Produit 4</option>
+        </select>
+
+        <label for="quantity">Quantité:</label>
+        <input type="number" id="quantity" name="quantity" required>
+
+        <button type="button" onclick="addProduct()">Ajouter</button>
+    </form>
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Produit</th>
+                <th>Quantité</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Les nouvelles lignes seront ajoutées ici -->
+        </tbody>
+    </table>
+
+    <script>
+        let editingRow = null;
+
+        function addProduct() {
+            const product = document.getElementById('product').value;
+            const quantity = document.getElementById('quantity').value;
+
+            if (product && quantity) {
+                if (editingRow) {
+                    // Mise à jour de la ligne existante
+                    editingRow.cells[0].textContent = product;
+                    editingRow.cells[1].textContent = quantity;
+                    editingRow = null;
+                } else {
+                    // Ajout d'une nouvelle ligne
+                    const table = document.getElementById('productTable').getElementsByTagName('tbody')[0];
+                    const newRow = table.insertRow();
+
+                    const productCell = newRow.insertCell(0);
+                    const quantityCell = newRow.insertCell(1);
+                    const actionCell = newRow.insertCell(2);
+
+                    productCell.textContent = product;
+                    quantityCell.textContent = quantity;
+
+                    const editBtn = document.createElement('button');
+                    editBtn.textContent = 'Éditer';
+                    editBtn.classList.add('action-btn', 'edit-btn');
+                    editBtn.onclick = function() {
+                        editProduct(newRow);
+                    };
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.textContent = 'Supprimer';
+                    deleteBtn.classList.add('action-btn', 'delete-btn');
+                    deleteBtn.onclick = function() {
+                        deleteProduct(newRow);
+                    };
+
+                    actionCell.appendChild(editBtn);
+                    actionCell.appendChild(deleteBtn);
+                }
+
+                document.getElementById('productForm').reset();
+            } else {
+                alert('Veuillez remplir les deux champs.');
+            }
+        }
+
+        function editProduct(row) {
+            const productCell = row.cells[0].textContent;
+            const quantityCell = row.cells[1].textContent;
+
+            document.getElementById('product').value = productCell;
+            document.getElementById('quantity').value = quantityCell;
+
+            editingRow = row;
+        }
+
+        function deleteProduct(row) {
+            if (confirm('Êtes-vous sûr de vouloir supprimer cet élément?')) {
+                row.remove();
+            }
+        }
+    </script>
+
+</body>
+</html>

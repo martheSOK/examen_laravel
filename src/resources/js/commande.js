@@ -1,4 +1,4 @@
-
+console.log(index);
 
 //création des variables
 
@@ -7,7 +7,7 @@ let tableau_ligne_commandes = document.getElementById("tableau_ligne_commande");
 
 let bouton_ajout_ligne=document.getElementById("btn_ajout_element");
 //let bouton_sup_ligne=document.getElementById("btn_sup");
-let id_ligne =0;
+let id_ligne = index;
 
 const produit =document.getElementById('produit_id');
 const quantite_element =document.getElementById('quantite_id');
@@ -24,6 +24,7 @@ function getLigne(produit_id,libelle, quantite) {
 
     return` <tr id="ligne-commande${id_ligne}" class="bg-gray-100">
         <td class="py-3 px-6">
+            <input hidden type="text" value="-1" name="ligne_ids[]" id=""/>
             <input hidden type="text" value="${produit_id}" name="produits_ids[]" id="">
             ${libelle}
         </td>
@@ -78,3 +79,9 @@ function rafraichiretable() {
 
 
 }
+
+
+
+
+
+
