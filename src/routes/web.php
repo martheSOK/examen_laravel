@@ -21,6 +21,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('produits', ProduitController::class);
     Route::resource('commandes', CommandeController::class);
 
+    Route::delete('/commande/ligne/{id}/delete',[CommandeController::class,'deleteLigneCommande']);
+
     /** Routes de ressource
      * Vous créer pour les 7 méthode d'un controlleur les 7 routes automatiquement
      * Syntaxe:
