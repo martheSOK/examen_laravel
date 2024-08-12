@@ -195,4 +195,16 @@ class CommandeController extends Controller
         $commande->delete();
         return redirect()->route('commandes.index');
     }
+
+
+    public function deleteLigneCommande($id)
+{
+    $ligneCommande = LigneCommande::find($id);
+    $commande = $ligneCommande->commande;
+    $ligneCommande->delete();
+
+    $newTotalMontant = $commande->calculateTotalMontant();
+
+    return response()->json(['success' => true, 'newTotalMontant' => $newTotalMontant]);
+}
 }
